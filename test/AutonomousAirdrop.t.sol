@@ -6,18 +6,42 @@ import { AutonomousAirdrop } from "../src/AutonomousAirdrop.sol";
 import { UselessToken } from "../src/UselessToken.sol";
 
 contract AutonomousAirdropTest is AxiomTest {
-    address public constant AXIOM_V2_QUERY_MOCK_SEPOLIA_ADDR = 0x83c8c0B395850bA55c830451Cfaca4F2A667a983;
-
+    address public constant SWAP_SENDER_ADDR = 0xf591C4c1e179A5E16407116882f7F8a524D51d14;
     AutonomousAirdrop autonomousAirdrop;
     UselessToken uselessToken;
 
     function setUp() public {
-        string memory artifact = vm.readFile("./app/axiom/data/compiled.json");
-        querySchema = bytes32(vm.parseJson(artifact, ".querySchema"));
+        _createSelectForkAndSetupAxiom("sepolia", 5_103_100);
+        
+        circuitPath = "app/axiom/swapEvent.circuit.ts";
+        inputPath = "app/axiom/data/inputs.json";
+        querySchema = axiomVm.compile(circuitPath, inputPath);
 
-        autonomousAirdrop = new AutonomousAirdrop(AXIOM_V2_QUERY_MOCK_SEPOLIA_ADDR, 11155111, querySchema);
+        autonomousAirdrop = new AutonomousAirdrop(axiomV2QueryAddress, uint64(block.chainid), querySchema);
         uselessToken = new UselessToken(address(autonomousAirdrop));
         autonomousAirdrop.updateAirdropToken(address(uselessToken));
     }
 
+    function test_axiomSendQuery() public {
+        AxiomVm.AxiomSendQueryArgs memory args =
+            axiomVm.sendQueryArgs(inputPath, address(autonomousAirdrop), callbackExtraData, feeData);
+
+        axiomV2Query.sendQuery{ value: args.value }(
+            args.sourceChainId,
+            args.dataQueryHash,
+            args.computeQuery,
+            args.callback,
+            args.feeData,
+            args.userSalt,
+            args.refundee,
+            args.dataQuery
+        );
+    }
+
+    function test_axiomCallback() public {
+        AxiomVm.AxiomFulfillCallbackArgs memory args =
+            axiomVm.fulfillCallbackArgs(inputPath, address(autonomousAirdrop), callbackExtraData, feeData, SWAP_SENDER_ADDR);
+        
+        axiomVm.prankCallback(args);
+    }
 }

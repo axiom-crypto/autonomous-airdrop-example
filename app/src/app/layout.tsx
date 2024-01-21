@@ -22,8 +22,8 @@ const SourceCodePro = Source_Code_Pro({
 });
 
 export const metadata: Metadata = {
-  title: 'Axiom Next.js Quickstart',
-  description: 'A quickstart example that generates a ZK proof of a simple circuit.',
+  title: 'Axiom Autonomous Airdrop Example dApp',
+  description: 'Users are able to generate a ZK proof of their own on-chain history to be eligible for an airdrop.',
 }
 
 export default function RootLayout({

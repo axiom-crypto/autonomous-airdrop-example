@@ -1,15 +1,21 @@
 {
   "name": "autonomous-airdrop-example",
   "version": "1.0.0",
-  "description": "",
+  "description": "An autonomous airdrop example dApp built with Axiom.",
   "main": "index.js",
   "scripts": {
     "test": "forge test",
     "dev": "cd app && $npm_execpath run dev"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "Axiom",
+    "Zero Knowledge",
+    "ZK Circuit",
+    "Autonomous Airdrop",
+    "Example dApp"
+  ],
+  "author": "Intrinsic Technologies",
+  "license": "MIT",
   "dependencies": {
     "@axiom-crypto/client": "2.0.3",
     "dotenv": "^16.3.2"

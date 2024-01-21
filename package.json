@@ -1,10 +1,11 @@
 {
-  "name": "autonomous-airdrop-test",
+  "name": "autonomous-airdrop-example",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "forge test",
+    "dev": "cd app && $npm_execpath run dev"
   },
   "keywords": [],
   "author": "",

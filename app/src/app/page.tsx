@@ -1,37 +1,26 @@
-'use client';
-
-import ConnectWallet from '@/components/ui/ConnectWallet'
 import AdvanceStepButton from '@/components/ui/AdvanceStepButton'
 import Title from '@/components/ui/Title'
-import compiledCircuit from "../../axiom/data/compiled.json";
-import { useAccount } from 'wagmi';
 import CodeBox from '@/components/ui/CodeBox';
 import Link from 'next/link';
 
 export default async function Home() {
-  const { isConnected, address } = useAccount();
-
+  let compiledCircuit;
+  try {
+    compiledCircuit = require("../../axiom/data/compiled.json");
+  } catch (e) {
+    console.log(e);
+  }
   if (compiledCircuit === undefined) {
     return (
       <>
         <div>
-          Compile circuit first by running
+          Compile circuit first by running in the root directory of this project:
         </div>
         <CodeBox>
           {"npx axiom compile circuit app/axiom/swapEvent.circuit.ts"}
         </CodeBox>
       </>
     )
-  }
-
-  const renderButton = () => {
-    if (isConnected) {
-      return <AdvanceStepButton
-        label="Generate Proof"
-        href={"/check"}
-      />;
-    }
-    return <ConnectWallet />;
   }
 
   return (
@@ -44,7 +33,10 @@ export default async function Home() {
         Sepolia testnet after block 4000000 is eligible for an airdrop of a test token called UselessToken. You may need to wait a few minutes after executing 
         your swap for the indexer to pick it up.
       </div>
-      {renderButton()}
+      <AdvanceStepButton
+        label="Generate Proof"
+        href={"/check"}
+      />
     </>
   )
 }

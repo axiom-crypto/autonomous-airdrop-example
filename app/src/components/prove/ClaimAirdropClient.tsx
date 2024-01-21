@@ -11,9 +11,10 @@ import {
 } from "wagmi";
 import Button from "../ui/Button";
 import { useRouter } from "next/navigation";
-import { formatEther } from "viem";
+import { formatEther, formatUnits, parseEther, parseUnits } from "viem";
 import Link from "next/link";
 import { useAxiomCircuit } from '@axiom-crypto/react';
+import Decimals from "../ui/Decimals";
 
 export default function ClaimAirdropClient({
   airdropAbi,
@@ -36,13 +37,12 @@ export default function ClaimAirdropClient({
     functionName: 'hasClaimed',
     args: [address ?? ""],
   });
-  console.log("hasClaimed?", hasClaimed);
 
   useEffect(() => {
     if (isSuccess) {
       setTimeout(() => {
         setShowExplorerLink(true);
-      }, 30000);
+      }, 10000);
     }
   }, [isSuccess, setShowExplorerLink]);
 
@@ -56,15 +56,15 @@ export default function ClaimAirdropClient({
     }
   }, [isError, router, address]);
 
-  // Monitor contract for `ClaimAirdrop` or `ClaimAirdropError` events
+  // Monitor contract for `ClaimAirdrop`
   useWatchContractEvent({
     address: Constants.AUTO_AIRDROP_ADDR as `0x${string}`,
     abi: airdropAbi,
     eventName: 'ClaimAirdrop',
     onLogs(logs: any) {
-      console.log("Claim airdrop success");
+      console.log("Claim airdrop success", logs);
       let topics = logs[0].topics;
-      if (topics[3] && builtQuery?.queryId && BigInt(topics[3]) === BigInt(builtQuery?.queryId)) {
+      if (topics[1] && builtQuery?.queryId && BigInt(topics[1]) === BigInt(builtQuery?.queryId)) {
         let txHash = logs[0].transactionHash;
         router.push(`success/?txHash=${txHash}`);
       }
@@ -85,7 +85,24 @@ export default function ClaimAirdropClient({
   }
 
   const renderClaimProofText = () => {
-    return `Generating the proof for the claim costs ${formatEther(BigInt(builtQuery?.value ?? 0)).toString()}ETH`;
+    return (
+      <div className="flex flex-col items-center text-sm mt-2">
+        <div>
+          {"Generating the proof for the claim costs up to "}
+          <Decimals>
+            {formatEther(BigInt(builtQuery?.value ?? 0)).toString()}
+          </Decimals>
+          {"ETH"}
+        </div>
+        <div>
+          {"(Based on a current maxFeePerGas of "}
+          <Decimals>
+            {formatUnits(builtQuery?.args?.[4]?.maxFeePerGas ?? "0", 9).toString()}
+          </Decimals>
+          {" gwei)"}
+        </div>
+      </div>
+    )
   }
 
   const renderExplorerLink = () => {

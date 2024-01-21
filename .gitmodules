@@ -4,3 +4,6 @@
 [submodule "lib/axiom-v2-periphery"]
 	path = lib/axiom-v2-periphery
 	url = https://github.com/axiom-crypto/axiom-v2-periphery
+[submodule "lib/openzeppelin-contracts"]
+	path = lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts

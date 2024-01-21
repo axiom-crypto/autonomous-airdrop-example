@@ -4,8 +4,8 @@ import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID as string;
 
 const metadata = {
-  name: 'Average Balance Proof',
-  description: 'Average Balance Proof',
+  name: 'Axiom Autonomous Airdrop Example dApp',
+  description: 'Axiom Autonomous Airdrop Example dApp',
   verifyUrl: 'localhost:3000',
   url: 'localhost:3000',
   icons: ['']

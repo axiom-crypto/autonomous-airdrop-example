@@ -44,7 +44,7 @@ export default function CheckUniswapTx() {
     return (
       <div className="flex flex-col items-center font-mono gap-2">
         <div>
-          {"Recent Swap Found"}
+          {"Recent Swap found"}
         </div>
         <div className="pb-2">
           {JSON.stringify(recentSwap, null, 2)}

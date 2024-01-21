@@ -3,25 +3,12 @@
 import ConnectWallet from '@/components/ui/ConnectWallet'
 import AdvanceStepButton from '@/components/ui/AdvanceStepButton'
 import Title from '@/components/ui/Title'
-import { forwardSearchParams } from '@/lib/utils'
 import compiledCircuit from "../../axiom/data/compiled.json";
 import { useAccount } from 'wagmi';
 import CodeBox from '@/components/ui/CodeBox';
+import Link from 'next/link';
 
-interface PageProps {
-  params: Params;
-  searchParams: SearchParams;
-}
-
-interface Params {
-  slug: string;
-}
-
-interface SearchParams {
-  [key: string]: string | string[] | undefined;
-}
-
-export default async function Home({ searchParams }: PageProps) {
+export default async function Home() {
   const { isConnected, address } = useAccount();
 
   if (compiledCircuit === undefined) {
@@ -50,10 +37,12 @@ export default async function Home({ searchParams }: PageProps) {
   return (
     <>
       <Title>
-        Swap Proof.
+        Autonomous Airdrop Example
       </Title>
       <div className="text-center">
-        Generate a ZK proof of your average ETH balance over the past 7,200 blocks (24 hours).
+        Anyone who has used <Link href="https://app.uniswap.org/swap" target="_blank">Uniswap</Link> (swapping a token for a token that is <b>not</b> ETH) on 
+        Sepolia testnet after block 4000000 is eligible for an airdrop of a test token called UselessToken. You may need to wait a few minutes after executing 
+        your swap for the indexer to pick it up.
       </div>
       {renderButton()}
     </>

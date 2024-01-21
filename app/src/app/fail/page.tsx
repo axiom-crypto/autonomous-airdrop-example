@@ -1,4 +1,4 @@
-import LinkButton from "@/components/ui/LinkButton";
+import AdvanceStepButton from "@/components/ui/AdvanceStepButton";
 import Title from "@/components/ui/Title";
 
 export default async function Fail() {
@@ -11,7 +11,7 @@ export default async function Fail() {
       <div className="text-center">
         {"Something went wrong and your Axiom query was not fulfilled."}
       </div>
-      <LinkButton
+      <AdvanceStepButton
         label="Try again"
         href="/"
       />

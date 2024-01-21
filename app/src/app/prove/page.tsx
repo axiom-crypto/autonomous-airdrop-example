@@ -1,9 +1,7 @@
 import BuildQuery from "@/components/prove/BuildQuery";
 import Title from "@/components/ui/Title";
-import callbackAbi from '@/lib/abi/AverageBalance.json';
+import AutonomousAirdrop from '@/lib/abi/AutonomousAirdrop.json';
 import jsonInputs from "../../../axiom/data/inputs.json";
-import { bytes32 } from "@/lib/utils";
-import { publicClient } from "@/lib/viemClient";
 import { Constants } from "@/shared/constants";
 import { UserInput } from "@axiom-crypto/client";
 
@@ -21,13 +19,10 @@ interface SearchParams {
 }
 
 export default async function Prove({ searchParams }: PageProps) {
-  const connected = searchParams?.connected as string ?? "";
-
-  const blockNumber = await publicClient.getBlockNumber();
   const inputs: UserInput<typeof jsonInputs> = {
-    blockNumber: 5122852,//Number(blockNumber),
-    txIdx: 34,
-    logIdx: 3,
+    blockNumber: Number(searchParams.blockNumber),
+    txIdx: Number(searchParams.txIdx),
+    logIdx: Number(searchParams.logIdx),
   };
 
   return (
@@ -41,10 +36,8 @@ export default async function Prove({ searchParams }: PageProps) {
       <div className="flex flex-col gap-2 items-center">
         <BuildQuery
           inputs={inputs}
-          callbackAddress={Constants.CALLBACK_CONTRACT}
-          callbackExtraData={bytes32(connected)}
-          refundee={connected}
-          callbackAbi={callbackAbi}
+          callbackAddress={Constants.AUTO_AIRDROP_ADDR}
+          callbackAbi={AutonomousAirdrop.abi}
         />
       </div>
     </>

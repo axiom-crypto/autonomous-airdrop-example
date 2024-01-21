@@ -36,7 +36,7 @@ export default function SubmitQuery({
 
   // Monitor contract for `AxiomV2Call` event
   useWatchContractEvent({
-    address: Constants.CALLBACK_CONTRACT as `0x${string}`,
+    address: Constants.AUTO_AIRDROP_ADDR as `0x${string}`,
     abi: callbackAbi,
     eventName: 'AxiomV2Call',
     onLogs: (logs) => {

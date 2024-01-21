@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build:circuit": "axiom circuit compile axiom/average.circuit.ts"
+    "build:circuit": "axiom circuit compile axiom/swapProof.circuit.ts"
   },
   "dependencies": {
     "@axiom-crypto/client": "2.0.3",

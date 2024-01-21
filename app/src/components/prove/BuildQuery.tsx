@@ -6,18 +6,18 @@ import jsonInputs from "../../../axiom/data/inputs.json";
 import { useEffect } from "react";
 import LoadingAnimation from "../ui/LoadingAnimation";
 import SubmitQuery from "./SubmitQuery";
+import { useAccount } from "wagmi";
+import { bytes32 } from "@/lib/utils";
 
 export default function BuildQuery({
   inputs,
   callbackAddress,
   callbackExtraData,
-  refundee,
   callbackAbi
 }: {
   inputs: UserInput<typeof jsonInputs>;
   callbackAddress: string;
-  callbackExtraData: string;
-  refundee: string;
+  callbackExtraData?: string;
   callbackAbi: any[];
 }) {
   const {
@@ -27,7 +27,16 @@ export default function BuildQuery({
     areParamsSet
   } = useAxiomCircuit<typeof jsonInputs>();
 
+  const { address: refundee } = useAccount();
+
+  if (callbackExtraData === undefined) {
+    callbackExtraData = bytes32("0");
+  }
+
   useEffect(() => {
+    if (refundee === undefined) {
+      return;
+    }
     setParams(inputs, callbackAddress, callbackExtraData, refundee);
   }, [setParams, inputs, callbackAddress, callbackExtraData, refundee]);
 
@@ -36,6 +45,7 @@ export default function BuildQuery({
       if (!areParamsSet) {
         return;
       }
+      console.log("inputs", inputs);
       await build();
     };
     buildQuery();

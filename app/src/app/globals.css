@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  color: #99998a;
+  background: #10100e;
+}
+
+a {
+  color: #ffffe6;
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+  transition: border 0.3s;
+}
+
+a:hover {
+  color: #ffffff;
+  border-bottom: 1px solid #ffffff;
+}

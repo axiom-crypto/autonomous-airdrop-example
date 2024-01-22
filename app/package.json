@@ -1,7 +1,6 @@
 {
   "name": "autonomous-airdrop-example-nextjs",
-  "version": "0.2.2",
-  "private": true,
+  "version": "2.0.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

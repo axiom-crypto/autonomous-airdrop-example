@@ -1,6 +1,6 @@
 {
   "name": "autonomous-airdrop-example",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "An autonomous airdrop example dApp built with Axiom.",
   "main": "index.js",
   "scripts": {

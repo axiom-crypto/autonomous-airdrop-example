@@ -108,7 +108,7 @@ export default function ClaimAirdropClient({
   return (
     <div className="flex flex-col items-center gap-2">
       <Button
-        disabled={isPending || isSuccess || !!hasClaimed}
+        disabled={!data?.request || isPending || isSuccess || !!hasClaimed}
         onClick={() => writeContract(data!.request)}
       >
         {renderButtonText()}

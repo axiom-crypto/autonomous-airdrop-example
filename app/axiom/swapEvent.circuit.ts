@@ -20,7 +20,8 @@ export interface CircuitInputs {
 // change the function name, you'll also need to ensure that you also pass the Axiom CLI flag 
 // `-f <circuitFunctionName>` for it to work
 export const circuit = async (inputs: CircuitInputs) => {
-  const eventSchema = "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67";
+  const eventSchema =
+    "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67";
 
   // specify and fetch the data you want Axiom to verify
   const receipt = getReceipt(inputs.blockNumber, inputs.txIdx);
@@ -29,13 +30,10 @@ export const circuit = async (inputs: CircuitInputs) => {
   // get the topic at index 2
   const swapTo = await receiptLog.topic(2, eventSchema);
 
-  // get the block number for receipt
-  const receiptBlockNumber = await receipt.blockNumber();
-
   // get the `address` field of the receipt log
   const receiptAddr = await receiptLog.address();
 
   addToCallback(swapTo);
-  addToCallback(receiptBlockNumber);
+  addToCallback(inputs.blockNumber);
   addToCallback(receiptAddr);
 };

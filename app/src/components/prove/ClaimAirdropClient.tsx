@@ -62,11 +62,14 @@ export default function ClaimAirdropClient({
     abi: airdropAbi,
     eventName: 'ClaimAirdrop',
     onLogs(logs: any) {
-      console.log("Claim airdrop success", logs);
       let topics = logs[0].topics;
-      if (topics[1] && builtQuery?.queryId && BigInt(topics[1]) === BigInt(builtQuery?.queryId)) {
+      console.log("Claim airdrop success", logs);
+      console.log("topics[2]", topics[2]);
+      console.log("builtQuery?.queryId", builtQuery?.queryId);
+      console.log("bigints", BigInt(topics[2]), BigInt(builtQuery?.queryId ?? "0"));
+      if (topics[2] && builtQuery?.queryId && BigInt(topics[2]) === BigInt(builtQuery?.queryId)) {
         let txHash = logs[0].transactionHash;
-        router.push(`success/?txHash=${txHash}`);
+        router.push(`success/?txHash=${txHash}&queryId=${builtQuery?.queryId}`);
       }
     },
   });
@@ -84,7 +87,7 @@ export default function ClaimAirdropClient({
     return "Claim 100 UT";
   }
 
-  const renderClaimProofText = () => {
+  const renderClaimProofCostText = () => {
     return (
       <div className="flex flex-col items-center text-sm mt-2">
         <div>
@@ -126,7 +129,7 @@ export default function ClaimAirdropClient({
       </Button>
       <div className="flex flex-col items-center text-sm gap-2">
         <div>
-          {isSuccess ? "Proof generation may take up to 3 minutes" : renderClaimProofText()}
+          {isSuccess ? "Proof generation may take up to 3 minutes" : renderClaimProofCostText()}
         </div>
         {renderExplorerLink()}
       </div>

@@ -32,7 +32,7 @@ export default function CheckUniswapTx() {
     return (
       <>
         <div className="text-center">
-          {"Sorry, we couldn't find a Swap event (swapping a token for a token that is not ETH) for this address after Sepolia block 4000000."}
+          {"Sorry, we couldn't find a Swap event for the UniV3 UNI-WETH pool for this address after Sepolia block 4000000."}
         </div>
         <AdvanceStepButton
           label="Go back"

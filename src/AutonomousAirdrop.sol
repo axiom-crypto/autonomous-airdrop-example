@@ -13,7 +13,7 @@ contract AutonomousAirdrop is AxiomV2Client, Ownable {
     event AirdropTokenAddressUpdated(address token);
 
     bytes32 public constant SWAP_EVENT_SCHEMA = 0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67;
-    address public constant UNI_UNIV_ROUTER_ADDR = 0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD;
+    address public constant UNIV3_POOL_UNI_WETH = 0x224Cc4e5b50036108C1d862442365054600c260C;
     uint32 public constant MIN_BLOCK_NUMBER = 4000000;
 
     uint64 public callbackSourceChainId;
@@ -54,7 +54,7 @@ contract AutonomousAirdrop is AxiomV2Client, Ownable {
         bytes32 eventSchema = axiomResults[0];
         address userEventAddress = address(uint160(uint256(axiomResults[1])));
         uint32 blockNumber = uint32(uint256(axiomResults[2]));
-        address uniswapUniversalRouterAddr = address(uint160(uint256(axiomResults[3])));
+        address uniV3PoolUniWethAddr = address(uint160(uint256(axiomResults[3])));
 
         // Validate the results
         require(eventSchema == SWAP_EVENT_SCHEMA, "Autonomous Airdrop: Invalid event schema");
@@ -64,8 +64,8 @@ contract AutonomousAirdrop is AxiomV2Client, Ownable {
             "Autonomous Airdrop: Block number for transaction receipt must be 4000000 or greater"
         );
         require(
-            uniswapUniversalRouterAddr == UNI_UNIV_ROUTER_ADDR,
-            "Autonomous Airdrop: Transaction `to` address is not the Uniswap Universal Router address"
+            uniV3PoolUniWethAddr == UNIV3_POOL_UNI_WETH,
+            "Autonomous Airdrop: Address that emitted `Swap` event is not the UniV3 UNI-WETH pool address"
         );
 
         // Transfer tokens to user

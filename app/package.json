@@ -1,5 +1,5 @@
 {
-  "name": "axiom-scaffold-nextjs",
+  "name": "autonomous-airdrop-example-nextjs",
   "version": "0.2.2",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build:circuit": "axiom circuit compile axiom/swapProof.circuit.ts"
+    "circuit:compile": "axiom circuit compile axiom/swapProof.circuit.ts"
   },
   "dependencies": {
     "@axiom-crypto/client": "2.0.3",

@@ -1,6 +1,6 @@
 # Autonomous Airdrop (using Axiom Client SDK)
 
-This example allows users to autonomously claim an airdrop of an example ERC20 token. Users utilize a data-fetching layer on top of Axiom to autonomously prove that their account matches some parameters before submitting a Query. In this case, it is the user has used Uniswap (swapping a token for a token that is **not** ETH) on Sepolia testnet after block 4000000.
+This example allows users to autonomously claim an airdrop of an example ERC20 token. Users utilize a data-fetching layer on top of Axiom to autonomously prove that their account matches some parameters before submitting a Query. In this case, it is the user has swapped in the UniswapV3 UNI-WETH pool on Sepolia testnet after block 4000000.
 
 This example was created by writing a client circuit with the [Axiom Client SDK](https://github.com/axiom-crypto/axiom-sdk-client) and using it to generate Axiom queries inside a webapp using [Axiom SDK React Components](https://www.npmjs.com/package/@axiom-crypto/react).
 

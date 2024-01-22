@@ -46,16 +46,6 @@ export default function ClaimAirdropClient({
     }
   }, [isSuccess, setShowExplorerLink]);
 
-  const proofGeneratedAction = useCallback(() => {
-    router.push(`success/?address=${address}`);
-  }, [router, address]);
-
-  const proofValidationFailedAction = useCallback(() => {
-    if (isError) {
-      router.push(`fail/?address=${address}`);
-    }
-  }, [isError, router, address]);
-
   // Monitor contract for `ClaimAirdrop`
   useWatchContractEvent({
     address: Constants.AUTO_AIRDROP_ADDR as `0x${string}`,
@@ -63,10 +53,6 @@ export default function ClaimAirdropClient({
     eventName: 'ClaimAirdrop',
     onLogs(logs: any) {
       let topics = logs[0].topics;
-      console.log("Claim airdrop success", logs);
-      console.log("topics[2]", topics[2]);
-      console.log("builtQuery?.queryId", builtQuery?.queryId);
-      console.log("bigints", BigInt(topics[2]), BigInt(builtQuery?.queryId ?? "0"));
       if (topics[2] && builtQuery?.queryId && BigInt(topics[2]) === BigInt(builtQuery?.queryId)) {
         let txHash = logs[0].transactionHash;
         router.push(`success/?txHash=${txHash}&queryId=${builtQuery?.queryId}`);

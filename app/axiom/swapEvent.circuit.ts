@@ -35,12 +35,11 @@ export const circuit = async (inputs: CircuitInputs) => {
   // get the block number for receipt
   const receiptBlockNumber = await receipt.blockNumber();
 
-  // get the `to` field of the transaction
-  const tx = getTx(inputs.blockNumber, inputs.txIdx);
-  const txTo = await tx.to();
+  // get the `address` field of the receipt log
+  const receiptAddr = await receiptLog.address();
 
   addToCallback(swapSchema);
   addToCallback(swapTo);
   addToCallback(receiptBlockNumber);
-  addToCallback(txTo);
+  addToCallback(receiptAddr);
 };

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "forge test",
+    "circuit:compile": "axiom circuit compile app/axiom/swapEvent.circuit.ts",
     "dev": "cd app && $npm_execpath run dev"
   },
   "keywords": [

@@ -11,19 +11,21 @@ export async function findMostRecentUniswapTx(address: string): Promise<{
     const res = await getRecentTxs(address, pageKey);
     const recentTx = res?.transfers ?? [];
     for (const tx of recentTx) {
-      // These are only the transactions that are from the user to the Uniswap contract, since we
-      // constrained the query by `fromAddress` (user) and `toAddress` (Uniswap contract)
+      // These are only the transactions that are from the user to the Uniswap router contract, 
+      // since we constrained the query by `fromAddress` (user) and `toAddress` (Uniswap contract)
       const receipt = await getRecentReceipt(tx?.hash);
       if (receipt.logs.length > 0) {
         for (const [idx, log] of receipt.logs.entries()) {
           if (
             log.topics[0] === Constants.EVENT_SCHEMA &&
-            log.topics[2].toLowerCase() === bytes32(address.toLowerCase())
+            log.topics[2].toLowerCase() === bytes32(address.toLowerCase()) &&
+            log.address.toLowerCase() === Constants.UNIV3_POOL_UNI_WETH
           ) {
+            // Note that logIdx is the index of the log in the transaction, **not** within the block
             return {
               blockNumber: Number(log.blockNumber).toString(),
               txIdx: Number(log.transactionIndex).toString(),
-              logIdx: idx.toString(),
+              logIdx: idx.toString(), 
             }
           }
         }

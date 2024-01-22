@@ -13,9 +13,8 @@ contract AutonomousAirdropTest is AxiomTest {
     function setUp() public {
         _createSelectForkAndSetupAxiom("sepolia", 5_103_100);
         
-        circuitPath = "app/axiom/swapEvent.circuit.ts";
         inputPath = "app/axiom/data/inputs.json";
-        querySchema = axiomVm.compile(circuitPath, inputPath);
+        querySchema = axiomVm.compile("app/axiom/swapEvent.circuit.ts", inputPath);
 
         autonomousAirdrop = new AutonomousAirdrop(axiomV2QueryAddress, uint64(block.chainid), querySchema);
         uselessToken = new UselessToken(address(autonomousAirdrop));

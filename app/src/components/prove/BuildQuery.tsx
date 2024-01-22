@@ -29,13 +29,12 @@ export default function BuildQuery({
 
   const { address: refundee } = useAccount();
 
-  if (callbackExtraData === undefined) {
-    callbackExtraData = bytes32("0");
-  }
-
   useEffect(() => {
     if (refundee === undefined) {
       return;
+    }
+    if (callbackExtraData === undefined) {
+      callbackExtraData = bytes32("0");
     }
     setParams(inputs, callbackAddress, callbackExtraData, refundee);
   }, [setParams, inputs, callbackAddress, callbackExtraData, refundee]);

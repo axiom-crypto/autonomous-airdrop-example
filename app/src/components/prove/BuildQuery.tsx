@@ -45,7 +45,6 @@ export default function BuildQuery({
       if (!areParamsSet) {
         return;
       }
-      console.log("inputs", inputs);
       await build();
     };
     buildQuery();

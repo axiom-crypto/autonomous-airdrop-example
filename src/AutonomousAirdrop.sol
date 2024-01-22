@@ -51,13 +51,11 @@ contract AutonomousAirdrop is AxiomV2Client, Ownable {
         require(!hasClaimed[callerAddr], "Autonomous Airdrop: User has already claimed this airdrop");
 
         // Parse results
-        bytes32 eventSchema = axiomResults[0];
-        address userEventAddress = address(uint160(uint256(axiomResults[1])));
-        uint32 blockNumber = uint32(uint256(axiomResults[2]));
-        address uniV3PoolUniWethAddr = address(uint160(uint256(axiomResults[3])));
+        address userEventAddress = address(uint160(uint256(axiomResults[0])));
+        uint32 blockNumber = uint32(uint256(axiomResults[1]));
+        address uniV3PoolUniWethAddr = address(uint160(uint256(axiomResults[2])));
 
         // Validate the results
-        require(eventSchema == SWAP_EVENT_SCHEMA, "Autonomous Airdrop: Invalid event schema");
         require(userEventAddress == callerAddr, "Autonomous Airdrop: Invalid user address for event");
         require(
             blockNumber >= MIN_BLOCK_NUMBER,

@@ -24,10 +24,7 @@ export const circuit = async (inputs: CircuitInputs) => {
 
   // specify and fetch the data you want Axiom to verify
   const receipt = getReceipt(inputs.blockNumber, inputs.txIdx);
-  const receiptLog = receipt.log(inputs.logIdx); //get the log at index 3
-
-  // get the topic at index 0 (event schema)
-  const swapSchema = await receiptLog.topic(0, eventSchema);
+  const receiptLog = receipt.log(inputs.logIdx);
 
   // get the topic at index 2
   const swapTo = await receiptLog.topic(2, eventSchema);
@@ -38,7 +35,6 @@ export const circuit = async (inputs: CircuitInputs) => {
   // get the `address` field of the receipt log
   const receiptAddr = await receiptLog.address();
 
-  addToCallback(swapSchema);
   addToCallback(swapTo);
   addToCallback(receiptBlockNumber);
   addToCallback(receiptAddr);

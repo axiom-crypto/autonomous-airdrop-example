@@ -1,21 +1,13 @@
-import { Chain, sepolia } from "viem/chains";
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
+import { http, createConfig } from 'wagmi'
+import { sepolia } from 'wagmi/chains'
+import { injected } from 'wagmi/connectors'
 
-const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID as string;
-
-const metadata = {
-  name: 'Axiom Autonomous Airdrop Example dApp',
-  description: 'Axiom Autonomous Airdrop Example dApp',
-  verifyUrl: 'localhost:3000',
-  url: 'localhost:3000',
-  icons: ['']
-}
-
-const chains: [Chain, ...Chain[]] = [sepolia]
-export const wagmiConfig = defaultWagmiConfig({
-  chains,
-  projectId,
-  metadata,
-});
-
-createWeb3Modal({ wagmiConfig, projectId, chains })
+export const wagmiConfig = createConfig({
+  chains: [sepolia],
+  connectors: [
+    injected(),
+  ],
+  transports: {
+    [sepolia.id]: http(process.env.NEXT_PUBLIC_ALCHEMY_URI_SEPOLIA),
+  },
+})

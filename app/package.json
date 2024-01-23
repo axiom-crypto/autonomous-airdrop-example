@@ -15,7 +15,6 @@
     "@types/node": "20.6.2",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
-    "@web3modal/wagmi": "4.0.0-alpha.0",
     "autoprefixer": "10.4.15",
     "comlink": "^4.4.1",
     "eslint": "8.49.0",

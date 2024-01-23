@@ -1,5 +1,4 @@
 export const Constants = Object.freeze({
-  WALLETCONNECT_PROJECT_ID: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
   EXPLORER_BASE_URL: "https://explorer.axiom.xyz/v2/sepolia/",
 
   UNISWAP_UNIV_ROUTER_SEPOLIA: "0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD".toLowerCase(),

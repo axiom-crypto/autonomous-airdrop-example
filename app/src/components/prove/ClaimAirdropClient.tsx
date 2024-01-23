@@ -11,7 +11,7 @@ import {
 } from "wagmi";
 import Button from "../ui/Button";
 import { useRouter } from "next/navigation";
-import { formatEther, formatUnits, parseEther, parseUnits } from "viem";
+import { formatEther, formatUnits } from "viem";
 import Link from "next/link";
 import { useAxiomCircuit } from '@axiom-crypto/react';
 import Decimals from "../ui/Decimals";

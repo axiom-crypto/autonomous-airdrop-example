@@ -9,17 +9,27 @@ export async function findMostRecentUniswapTx(address: string): Promise<{
   let pageKey = "";
   while (pageKey !== undefined) {
     const res = await getRecentTxs(address, pageKey);
+    if (res === null) {
+      console.log("Could not find any Transfer transaction");
+      return null;
+    }
     const recentTx = res?.transfers ?? [];
     for (const tx of recentTx) {
       // These are only the transactions that are from the user to the Uniswap router contract, 
       // since we constrained the query by `fromAddress` (user) and `toAddress` (Uniswap contract)
       const receipt = await getRecentReceipt(tx?.hash);
+      if (receipt === null) {
+        continue;
+      }
       if (receipt.logs.length > 0) {
         for (const [idx, log] of receipt.logs.entries()) {
           if (
             log.topics[0] === Constants.EVENT_SCHEMA &&
             log.topics[2].toLowerCase() === bytes32(address.toLowerCase()) &&
-            log.address.toLowerCase() === Constants.UNIV3_POOL_UNI_WETH
+            (
+              log.address.toLowerCase() === Constants.UNIV3_POOL_UNI_WETH0 ||
+              log.address.toLowerCase() === Constants.UNIV3_POOL_UNI_WETH1
+            )
           ) {
             // Note that logIdx is the index of the log in the transaction, **not** within the block
             return {
@@ -54,39 +64,47 @@ async function getRecentTxs(address: string, pageKey?: string) {
   if (typeof pageKey !== "undefined" && pageKey !== "") {
     params[pageKey] = pageKey;
   }
-  const res = await fetch(process.env.NEXT_PUBLIC_ALCHEMY_URI_SEPOLIA as string, {
-    method: "post",
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      "id": 1,
-      "jsonrpc": "2.0",
-      "method": "alchemy_getAssetTransfers",
-      "params": [
-        params
-      ]
-    }),
-  })
-  const json = await res.json();
-  return json?.result;
+  try {
+    const res = await fetch(process.env.NEXT_PUBLIC_ALCHEMY_URI_SEPOLIA as string, {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "id": 1,
+        "jsonrpc": "2.0",
+        "method": "alchemy_getAssetTransfers",
+        "params": [
+          params
+        ]
+      }),
+    })
+    const json = await res.json();
+    return json?.result;
+  } catch (e) {
+    return null;
+  }
 }
 
 async function getRecentReceipt(hash: string) {
-  const res = await fetch(process.env.NEXT_PUBLIC_ALCHEMY_URI_SEPOLIA as string, {
-    method: "post",
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      "id": 1,
-      "jsonrpc": "2.0",
-      "method": "eth_getTransactionReceipt",
-      "params": [hash]
-    }),
-  })
-  const json = await res.json();
-  return json?.result;
+  try {
+    const res = await fetch(process.env.NEXT_PUBLIC_ALCHEMY_URI_SEPOLIA as string, {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "id": 1,
+        "jsonrpc": "2.0",
+        "method": "eth_getTransactionReceipt",
+        "params": [hash]
+      }),
+    })
+    const json = await res.json();
+    return json?.result;
+  } catch (e) {
+    return null;
+  }
 }

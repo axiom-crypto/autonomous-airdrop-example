@@ -12,7 +12,7 @@ export default function Navbar() {
     <div className="flex flex-row justify-between items-center w-full px-8 py-4 border-b-[1px] border-darkgrey shadow-md">
       <Link href="/" className="text-xl text-white font-mono">
         <div >
-          Autonomous Airdrop Example
+          Asset Refund Example
         </div>
       </Link>
       <div className="flex flex-row items-center gap-4 sm:gap-8">
@@ -25,7 +25,7 @@ export default function Navbar() {
         <Link href="https://github.com/axiom-crypto/autonomous-airdrop-example">
           Github
         </Link>
-        <ConnectWallet/>
+        <ConnectWallet />
       </div>
     </div>
   )

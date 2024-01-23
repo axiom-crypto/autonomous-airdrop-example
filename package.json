@@ -1,7 +1,7 @@
 {
-  "name": "autonomous-airdrop-example",
-  "version": "2.0.0",
-  "description": "An autonomous airdrop example dApp built with Axiom.",
+  "name": "asset-refund-example",
+  "version": "1.0.0",
+  "description": "An asset refund example dApp built with Axiom.",
   "main": "index.js",
   "scripts": {
     "test": "forge test",
@@ -12,7 +12,7 @@
     "Axiom",
     "Zero Knowledge",
     "ZK Circuit",
-    "Autonomous Airdrop",
+    "Asset Refund",
     "Example dApp"
   ],
   "author": "Intrinsic Technologies",

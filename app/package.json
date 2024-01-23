@@ -1,5 +1,5 @@
 {
-  "name": "autonomous-airdrop-example-nextjs",
+  "name": "asset-refund-example-nextjs",
   "version": "2.0.0",
   "scripts": {
     "dev": "next dev",
@@ -8,6 +8,7 @@
     "lint": "next lint",
     "circuit:compile": "axiom circuit compile axiom/swapProof.circuit.ts"
   },
+  "main": "index.js",
   "dependencies": {
     "@axiom-crypto/client": "2.0.3",
     "@axiom-crypto/react": "2.0.3",

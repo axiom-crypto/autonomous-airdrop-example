@@ -17,7 +17,7 @@ export default async function Home() {
           Compile circuit first by running in the root directory of this project:
         </div>
         <CodeBox>
-          {"npx axiom compile circuit app/axiom/swapEvent.circuit.ts"}
+          {"npx axiom compile circuit app/axiom/refundEvent.circuit.ts"}
         </CodeBox>
       </>
     )
@@ -26,12 +26,11 @@ export default async function Home() {
   return (
     <>
       <Title>
-        Autonomous Airdrop Example
+        Asset Refund Example
       </Title>
       <div className="text-center">
-        Anyone who has used <Link href="https://app.uniswap.org/swap" target="_blank">Uniswap</Link> to
-        swap in the UniswapV3 UNI-WETH pool on Sepolia testnet after block 4000000 is eligible for an 
-        airdrop of a useless test ERC20 token. You may need to wait a few minutes after executing your
+        Anyone who has sent UNI token to the specified address on Sepolia testnet is eligible for a
+        refund of a useless test ERC20 token. You may need to wait a few minutes after executing your
         swap for the indexer to pick it up.
       </div>
       <AdvanceStepButton

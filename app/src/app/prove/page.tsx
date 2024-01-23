@@ -1,6 +1,6 @@
 import BuildQuery from "@/components/prove/BuildQuery";
 import Title from "@/components/ui/Title";
-import AutonomousAirdrop from '@/lib/abi/AutonomousAirdrop.json';
+import AssetRefund from '@/lib/abi/AssetRefund.json';
 import jsonInputs from "../../../axiom/data/inputs.json";
 import { Constants } from "@/shared/constants";
 import { UserInput } from "@axiom-crypto/client";
@@ -36,8 +36,8 @@ export default async function Prove({ searchParams }: PageProps) {
       <div className="flex flex-col gap-2 items-center">
         <BuildQuery
           inputs={inputs}
-          callbackAddress={Constants.AUTO_AIRDROP_ADDR}
-          callbackAbi={AutonomousAirdrop.abi}
+          callbackAddress={Constants.ASSET_REFUND_ADDR}
+          callbackAbi={AssetRefund.abi}
         />
       </div>
     </>

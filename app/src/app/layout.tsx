@@ -22,8 +22,8 @@ const SourceCodePro = Source_Code_Pro({
 });
 
 export const metadata: Metadata = {
-  title: 'Axiom Autonomous Airdrop Example dApp',
-  description: 'Users are able to generate a ZK proof of their own on-chain history to be eligible for an airdrop.',
+  title: 'Axiom Asset Refund Example dApp',
+  description: 'Users are able to generate a ZK proof of their sending UNI to a specificed address.',
 }
 
 export default function RootLayout({

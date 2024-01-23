@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useAxiomCircuit } from '@axiom-crypto/react';
 import Decimals from "../ui/Decimals";
 
-export default function ClaimAirdropClient({
+export default function ClaimRefundClient({
   airdropAbi,
 }: {
   airdropAbi: any[],
@@ -30,9 +30,9 @@ export default function ClaimAirdropClient({
   const { data } = useSimulateContract(builtQuery!);
   const { writeContract, isPending, isSuccess, isError } = useWriteContract();
 
-  // Check that the user has not claimed the airdrop yet
+  // Check that the user has not claimed the refund yet
   const { data: hasClaimed, isPending: hasClaimedLoading } = useReadContract({
-    address: Constants.AUTO_AIRDROP_ADDR as `0x${string}`,
+    address: Constants.ASSET_REFUND_ADDR as `0x${string}`,
     abi: airdropAbi,
     functionName: 'hasClaimed',
     args: [address ?? ""],
@@ -46,11 +46,11 @@ export default function ClaimAirdropClient({
     }
   }, [isSuccess, setShowExplorerLink]);
 
-  // Monitor contract for `ClaimAirdrop`
+  // Monitor contract for `ClaimRefund`
   useWatchContractEvent({
-    address: Constants.AUTO_AIRDROP_ADDR as `0x${string}`,
+    address: Constants.ASSET_REFUND_ADDR as `0x${string}`,
     abi: airdropAbi,
-    eventName: 'ClaimAirdrop',
+    eventName: 'ClaimRefund',
     onLogs(logs: any) {
       let topics = logs[0].topics;
       if (topics[2] && builtQuery?.queryId && BigInt(topics[2]) === BigInt(builtQuery?.queryId)) {
@@ -65,10 +65,10 @@ export default function ClaimAirdropClient({
       return "Waiting for callback...";
     }
     if (isPending) {
-      return "Confrm transaction in wallet...";
+      return "Confirm transaction in wallet...";
     }
     if (!!hasClaimed) {
-      return "Airdrop already claimed"
+      return "Refund already claimed"
     }
     return "Claim 100 UT";
   }
@@ -104,6 +104,11 @@ export default function ClaimAirdropClient({
       </Link>
     )
   }
+
+  console.log(!data?.request);
+  console.log(isPending);
+  console.log(isSuccess);
+  console.log(!!hasClaimed);
 
   return (
     <div className="flex flex-col items-center gap-2">

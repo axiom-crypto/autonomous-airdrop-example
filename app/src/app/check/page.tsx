@@ -1,4 +1,4 @@
-import CheckUniswapTx from "@/components/check/CheckUniswapTx";
+import CheckUniswapTx from "@/components/check/CheckUniTransferTx";
 import Title from "@/components/ui/Title";
 
 export default async function Check() {

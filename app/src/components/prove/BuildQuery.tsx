@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import LoadingAnimation from "../ui/LoadingAnimation";
 import { useAccount } from "wagmi";
 import { bytes32 } from "@/lib/utils";
-import ClaimAirdropClient from "./ClaimAirdropClient";
+import ClaimRefundClient from "./ClaimRefundClient";
 
 export default function BuildQuery({
   inputs,
@@ -57,5 +57,5 @@ export default function BuildQuery({
     );
   }
 
-  return <ClaimAirdropClient airdropAbi={callbackAbi} />;
+  return <ClaimRefundClient airdropAbi={callbackAbi} />;
 }

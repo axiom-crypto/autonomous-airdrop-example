@@ -1,12 +1,12 @@
 "use client"
 
-import { findMostRecentUniswapTx } from "@/lib/parseRecentTx";
+import { findMostRecentUniTransferTx } from "@/lib/parseRecentTx";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import AdvanceStepButton from "../ui/AdvanceStepButton";
 import LoadingAnimation from "../ui/LoadingAnimation";
 
-export default function CheckUniswapTx() {
+export default function CheckUniTransferTx() {
   const [recentSwap, setRecentSwap] = useState<any | undefined | null>(undefined);
 
   const { address, isConnected } = useAccount();
@@ -16,7 +16,7 @@ export default function CheckUniswapTx() {
       if (address === undefined || !isConnected) {
         return;
       }
-      const recentSwap = await findMostRecentUniswapTx(address);
+      const recentSwap = await findMostRecentUniTransferTx(address);
       setRecentSwap(recentSwap);
     }
     findTx();
@@ -25,14 +25,14 @@ export default function CheckUniswapTx() {
   if (recentSwap === undefined) {
     return (
       <div className="flex flex-row items-center font-mono gap-2">
-        {"Finding recent Swap event"} <LoadingAnimation />
+        {"Finding recent transfer event"} <LoadingAnimation />
       </div>
     );
   } else if (recentSwap === null) {
     return (
       <>
         <div className="text-center">
-          {"Sorry, we couldn't find a Swap event for the UniV3 UNI-WETH pool for this address after Sepolia block 4000000."}
+          {"Sorry, we couldn't find a transfer event of UNI to the specified address from this account."}
         </div>
         <AdvanceStepButton
           label="Go back"

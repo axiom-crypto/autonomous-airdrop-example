@@ -1,4 +1,5 @@
 import {
+  isEqual,
   addToCallback,
   CircuitValue,
   CircuitValue256,
@@ -14,6 +15,8 @@ export interface CircuitInputs {
   blockNumber: CircuitValue;
   txIdx: CircuitValue;
   logIdx: CircuitValue;
+  senderAddress: CircuitValue256;
+  expectedAmount: CircuitValue256;
 }
 
 // The function name `circuit` is searched for by default by our Axiom CLI; if you decide to 
@@ -21,19 +24,22 @@ export interface CircuitInputs {
 // `-f <circuitFunctionName>` for it to work
 export const circuit = async (inputs: CircuitInputs) => {
   const eventSchema =
-    "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67";
+    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
 
   // specify and fetch the data you want Axiom to verify
   const receipt = getReceipt(inputs.blockNumber, inputs.txIdx);
   const receiptLog = receipt.log(inputs.logIdx);
+  const tokenContractAddress = await receiptLog.address();
 
-  // get the topic at index 2
-  const swapTo = await receiptLog.topic(2, eventSchema);
+  console.log(tokenContractAddress);
 
-  // get the `address` field of the receipt log
-  const receiptAddr = await receiptLog.address();
+  // Verify the UNI Transfer event
+  const transferFrom = await receiptLog.topic(1, eventSchema);
+  const transferTo = await receiptLog.topic(2, eventSchema);
+  const transferValue = await receiptLog.data(0, eventSchema);
 
-  addToCallback(swapTo);
-  addToCallback(inputs.blockNumber);
-  addToCallback(receiptAddr);
+  addToCallback(transferFrom);
+  addToCallback(transferTo);
+  addToCallback(transferValue);
+  addToCallback(tokenContractAddress);
 };

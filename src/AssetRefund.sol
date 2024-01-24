@@ -27,7 +27,7 @@ contract AssetRefund is AxiomV2Client, Ownable {
     uint64 public callbackSourceChainId;
     bytes32 public axiomCallbackQuerySchema;
     mapping(address => bool) public querySubmitted;
-    mapping(address => bool) public hasClaimed;
+    mapping(uint256 => bool) public hasClaimed;
 
     IERC20 public token = IERC20(0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984);
 
@@ -60,8 +60,11 @@ contract AssetRefund is AxiomV2Client, Ownable {
         bytes32[] calldata axiomResults,
         bytes calldata /* extraData */
     ) internal virtual override {
+        uint256 blockNumber = uint256(axiomResults[4]);
+        uint256 txIdx = uint256(axiomResults[5]);
+
         require(
-            !hasClaimed[callerAddr],
+            !hasClaimed[(blockNumber << 128) | txIdx],
             "Asset Refund: User has already claimed this refund"
         );
 
@@ -88,8 +91,7 @@ contract AssetRefund is AxiomV2Client, Ownable {
         );
 
         // Transfer tokens to user
-        hasClaimed[callerAddr] = true;
-        // require(token.approve(address(this), transferValue), "Approval failed");
+        hasClaimed[(blockNumber << 128) | txIdx] = true;
         require(
             token.transferFrom(MY_ADDRESS, callerAddr, transferValue),
             "Refund failed"

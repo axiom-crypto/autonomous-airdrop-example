@@ -42,4 +42,6 @@ export const circuit = async (inputs: CircuitInputs) => {
   addToCallback(transferTo);
   addToCallback(transferValue);
   addToCallback(tokenContractAddress);
+  addToCallback(inputs.blockNumber);
+  addToCallback(inputs.txIdx);
 };

@@ -57,5 +57,5 @@ export default function BuildQuery({
     );
   }
 
-  return <ClaimRefundClient refundAbi={callbackAbi} />;
+  return <ClaimRefundClient refundAbi={callbackAbi} inputs={inputs} />;
 }

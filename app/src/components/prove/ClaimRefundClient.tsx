@@ -15,13 +15,19 @@ import { formatEther, formatUnits } from "viem";
 import Link from "next/link";
 import { useAxiomCircuit } from '@axiom-crypto/react';
 import Decimals from "../ui/Decimals";
+import { UserInput } from "@axiom-crypto/client";
+import jsonInputs from "../../../axiom/data/inputs.json";
 
 export default function ClaimRefundClient({
   refundAbi,
+  inputs
 }: {
   refundAbi: any[],
+  inputs: UserInput<typeof jsonInputs>;
 }) {
-  const { address } = useAccount();
+  // const { address } = useAccount();
+  console.log(inputs.blockNumber);
+  console.log(inputs.txIdx);
   const router = useRouter();
   const { builtQuery } = useAxiomCircuit();
   const [showExplorerLink, setShowExplorerLink] = useState(false);
@@ -35,8 +41,10 @@ export default function ClaimRefundClient({
     address: Constants.ASSET_REFUND_ADDR as `0x${string}`,
     abi: refundAbi,
     functionName: 'hasClaimed',
-    args: [address ?? ""],
+    args: [(BigInt(inputs.blockNumber) << BigInt(128) | BigInt(inputs.txIdx)) ?? ""],
   });
+
+  console.log("num: ", ((BigInt(inputs.blockNumber) << BigInt(128) | BigInt(inputs.txIdx)) ?? ""));
 
   useEffect(() => {
     if (isSuccess) {
@@ -68,7 +76,7 @@ export default function ClaimRefundClient({
       return "Confirm transaction in wallet...";
     }
     if (!!hasClaimed) {
-      return "Refund already claimed"
+      return "Refund already claimed for this transaction"
     }
     return "Claim your UNI";
   }

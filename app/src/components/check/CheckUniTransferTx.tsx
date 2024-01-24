@@ -7,7 +7,7 @@ import AdvanceStepButton from "../ui/AdvanceStepButton";
 import LoadingAnimation from "../ui/LoadingAnimation";
 
 export default function CheckUniTransferTx() {
-  const [recentSwap, setRecentSwap] = useState<any | undefined | null>(undefined);
+  const [recentTransfer, setRecentTransfer] = useState<any | undefined | null>(undefined);
 
   const { address, isConnected } = useAccount();
 
@@ -16,19 +16,19 @@ export default function CheckUniTransferTx() {
       if (address === undefined || !isConnected) {
         return;
       }
-      const recentSwap = await findMostRecentUniTransferTx(address);
-      setRecentSwap(recentSwap);
+      const recentTransfer = await findMostRecentUniTransferTx(address);
+      setRecentTransfer(recentTransfer);
     }
     findTx();
   }, [address, isConnected]);
 
-  if (recentSwap === undefined) {
+  if (recentTransfer === undefined) {
     return (
       <div className="flex flex-row items-center font-mono gap-2">
         {"Finding recent transfer event"} <LoadingAnimation />
       </div>
     );
-  } else if (recentSwap === null) {
+  } else if (recentTransfer === null) {
     return (
       <>
         <div className="text-center">
@@ -44,17 +44,17 @@ export default function CheckUniTransferTx() {
     return (
       <div className="flex flex-col items-center font-mono gap-2">
         <div>
-          {"Recent Swap found"}
+          {"Recent Transfer found"}
         </div>
         <div className="pb-2">
-          {JSON.stringify(recentSwap, null, 2)}
+          {JSON.stringify(recentTransfer, null, 2)}
         </div>
         <AdvanceStepButton
           label="Build Axiom proof params"
           href={"/prove?" + new URLSearchParams({
-            blockNumber: recentSwap.blockNumber,
-            txIdx: recentSwap.txIdx,
-            logIdx: recentSwap.logIdx,
+            blockNumber: recentTransfer.blockNumber,
+            txIdx: recentTransfer.txIdx,
+            logIdx: recentTransfer.logIdx,
           })}
         />
       </div>

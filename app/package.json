@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "circuit:compile": "axiom circuit compile axiom/swapProof.circuit.ts"
+    "circuit:compile": "axiom circuit compile axiom/refundProof.circuit.ts"
   },
   "main": "index.js",
   "dependencies": {

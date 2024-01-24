@@ -19,7 +19,7 @@ contract AssetRefund is AxiomV2Client, Ownable {
 
     bytes32 public constant TRANSFER_SCHEMA =
         0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef;
-    address public constant RECEIVER_ADDRESS =
+    address public constant MY_ADDRESS =
         0xe534b1d79cB4C8e11bEB93f00184a12bd85a63fD;
     address public constant UNI_TRANSFER_ADDRESS =
         0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984;
@@ -29,7 +29,7 @@ contract AssetRefund is AxiomV2Client, Ownable {
     mapping(address => bool) public querySubmitted;
     mapping(address => bool) public hasClaimed;
 
-    IERC20 public token;
+    IERC20 public token = IERC20(0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984);
 
     constructor(
         address _axiomV2QueryAddress,
@@ -79,20 +79,23 @@ contract AssetRefund is AxiomV2Client, Ownable {
             "Asset Refund: Invalid user address for event"
         );
         require(
-            receiverAddress == RECEIVER_ADDRESS,
+            receiverAddress == MY_ADDRESS,
             "Asset Refund: Invalid receiver address for event"
         );
         require(
             tokenContractAddress == UNI_TRANSFER_ADDRESS,
-            "Asset Refund: Address that emitted transfer event is not the USDT Transfer address"
+            "Asset Refund: Address that emitted transfer event is not the UNI Transfer address"
         );
 
         // Transfer tokens to user
         hasClaimed[callerAddr] = true;
-        uint256 numTokens = 100 * 10 ** 18;
-        token.transfer(callerAddr, numTokens);
+        // require(token.approve(address(this), transferValue), "Approval failed");
+        require(
+            token.transferFrom(MY_ADDRESS, callerAddr, transferValue),
+            "Refund failed"
+        );
 
-        emit ClaimRefund(callerAddr, queryId, numTokens, axiomResults);
+        emit ClaimRefund(callerAddr, queryId, transferValue, axiomResults);
     }
 
     function _validateAxiomV2Call(

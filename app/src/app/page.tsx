@@ -30,8 +30,7 @@ export default async function Home() {
       </Title>
       <div className="text-center">
         Anyone who has sent UNI token to the specified address on Sepolia testnet is eligible for a
-        refund of a useless test ERC20 token. You may need to wait a few minutes after executing your
-        swap for the indexer to pick it up.
+        refund of their UNI.
       </div>
       <AdvanceStepButton
         label="Generate Proof"

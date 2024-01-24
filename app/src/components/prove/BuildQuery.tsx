@@ -57,5 +57,5 @@ export default function BuildQuery({
     );
   }
 
-  return <ClaimRefundClient airdropAbi={callbackAbi} />;
+  return <ClaimRefundClient refundAbi={callbackAbi} />;
 }

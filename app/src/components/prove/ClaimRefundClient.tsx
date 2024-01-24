@@ -17,9 +17,9 @@ import { useAxiomCircuit } from '@axiom-crypto/react';
 import Decimals from "../ui/Decimals";
 
 export default function ClaimRefundClient({
-  airdropAbi,
+  refundAbi,
 }: {
-  airdropAbi: any[],
+  refundAbi: any[],
 }) {
   const { address } = useAccount();
   const router = useRouter();
@@ -27,13 +27,13 @@ export default function ClaimRefundClient({
   const [showExplorerLink, setShowExplorerLink] = useState(false);
 
   // Prepare hook for the sendQuery transaction
-  const { data } = useSimulateContract(builtQuery!);
+  const { data, error } = useSimulateContract(builtQuery!);
   const { writeContract, isPending, isSuccess, isError } = useWriteContract();
 
   // Check that the user has not claimed the refund yet
   const { data: hasClaimed, isPending: hasClaimedLoading } = useReadContract({
     address: Constants.ASSET_REFUND_ADDR as `0x${string}`,
-    abi: airdropAbi,
+    abi: refundAbi,
     functionName: 'hasClaimed',
     args: [address ?? ""],
   });
@@ -49,7 +49,7 @@ export default function ClaimRefundClient({
   // Monitor contract for `ClaimRefund`
   useWatchContractEvent({
     address: Constants.ASSET_REFUND_ADDR as `0x${string}`,
-    abi: airdropAbi,
+    abi: refundAbi,
     eventName: 'ClaimRefund',
     onLogs(logs: any) {
       let topics = logs[0].topics;
@@ -70,7 +70,7 @@ export default function ClaimRefundClient({
     if (!!hasClaimed) {
       return "Refund already claimed"
     }
-    return "Claim 100 UT";
+    return "Claim your UNI";
   }
 
   const renderClaimProofCostText = () => {
@@ -104,11 +104,6 @@ export default function ClaimRefundClient({
       </Link>
     )
   }
-
-  console.log(!data?.request);
-  console.log(isPending);
-  console.log(isSuccess);
-  console.log(!!hasClaimed);
 
   return (
     <div className="flex flex-col items-center gap-2">

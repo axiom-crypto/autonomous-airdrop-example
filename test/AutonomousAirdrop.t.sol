@@ -17,19 +17,19 @@ contract AutonomousAirdropTest is AxiomTest {
     address public constant SWAP_SENDER_ADDR = 0xf591C4c1e179A5E16407116882f7F8a524D51d14;
     AutonomousAirdrop autonomousAirdrop;
     UselessToken uselessToken;
-    AxiomInput public defaultInput;
+    AxiomInput public input;
     bytes32 public querySchema;
 
     function setUp() public {
         _createSelectForkAndSetupAxiom("sepolia", 5_103_100);
 
-        defaultInput = AxiomInput({
+        input = AxiomInput({
             blockNumber: 5_130_226,
             txIdx: 40,
             logIdx: 2
         });
         
-        querySchema = axiomVm.readCircuit("app/axiom/swapEvent.circuit.ts", abi.encode(defaultInput));
+        querySchema = axiomVm.readCircuit("app/axiom/swapEvent.circuit.ts");
 
         autonomousAirdrop = new AutonomousAirdrop(axiomV2QueryAddress, uint64(block.chainid), querySchema);
         uselessToken = new UselessToken(address(autonomousAirdrop));
@@ -39,7 +39,7 @@ contract AutonomousAirdropTest is AxiomTest {
         /// @dev Simple demonstration of testing an Axiom client contract using Axiom cheatcodes
     function test_simple_example() public {
         // create a query into Axiom with default parameters
-        Query memory q = query(querySchema, abi.encode(defaultInput), address(autonomousAirdrop));
+        Query memory q = query(querySchema, abi.encode(input), address(autonomousAirdrop));
 
         // send the query to Axiom
         q.send();

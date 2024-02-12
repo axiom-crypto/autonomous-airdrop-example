@@ -6,6 +6,7 @@ libs = ["node_modules", "lib"]
 remappings = [
   "@axiom-crypto/axiom-std/=lib/axiom-std/src/",
   "@openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
+  "forge-std/=lib/openzeppelin-contracts/lib/forge-std/src/"
 ]
 ffi = true
 

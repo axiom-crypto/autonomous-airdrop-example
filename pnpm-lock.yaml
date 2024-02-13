@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@axiom-crypto/client':
-    specifier: 2.0.3
-    version: 2.0.3(typescript@5.3.3)
+    specifier: 2.0.4
+    version: 2.0.4(typescript@5.3.3)
   dotenv:
     specifier: ^16.3.2
     version: 16.3.2
@@ -26,13 +26,13 @@ packages:
     resolution: {integrity: sha512-nA9XHtlAkYfJxY7bce8DcN7eKxWWCWkU+1GR9d+U6MbNpfwQp8TI7vqOsBsMcHoT4mBu2kypKoSKnghEzOOq5Q==}
     dev: false
 
-  /@axiom-crypto/circuit@2.0.3(typescript@5.3.3):
-    resolution: {integrity: sha512-CoutK1HVo4TI1hUlzxtHdl9DIYjMPCpQfpxOeKKqghZURADpj4pDWrQivKzxePjlBmbdX7NyS/Ox98tyzXYmeA==}
+  /@axiom-crypto/circuit@2.0.4(typescript@5.3.3):
+    resolution: {integrity: sha512-yy102cSR8HOpumhm0PRAiE6TS28N3mnrUQN7pNnLzsvg8K6EipIXufZGbn8VMadelf91F37PuR76egRFIcH3tg==}
     dependencies:
-      '@axiom-crypto/core': 2.3.4
+      '@axiom-crypto/core': 2.3.5
       '@axiom-crypto/halo2-lib-js': 0.3.4
       '@axiom-crypto/halo2-wasm': 0.3.4
-      '@axiom-crypto/tools': 2.0.0
+      '@axiom-crypto/tools': 2.0.1
       commander: 11.1.0
       ethers: 6.10.0
       viem: 1.21.4(typescript@5.3.3)
@@ -44,12 +44,12 @@ packages:
       - zod
     dev: false
 
-  /@axiom-crypto/client@2.0.3(typescript@5.3.3):
-    resolution: {integrity: sha512-1QgDOoPtHpOnUO2Bp9FSKwffg8yZyaw4jKeeinnZ9BLSP5JXZ9auqv2ui7P6cZIbbGvnymr8KUwJTyg94FSD6g==}
+  /@axiom-crypto/client@2.0.4(typescript@5.3.3):
+    resolution: {integrity: sha512-jyISkg36vJBIUnPlCI9bEYQjs2BnCJT4m40gZs3QIxHvA7g1eURMHaGnTt5vVA+2aVwA3HnmVFInusMw7hABJQ==}
     hasBin: true
     dependencies:
-      '@axiom-crypto/circuit': 2.0.3(typescript@5.3.3)
-      '@axiom-crypto/core': 2.3.4
+      '@axiom-crypto/circuit': 2.0.4(typescript@5.3.3)
+      '@axiom-crypto/core': 2.3.5
       chalk: 4.1.2
       commander: 11.1.0
       prompts: 2.4.2
@@ -62,10 +62,10 @@ packages:
       - zod
     dev: false
 
-  /@axiom-crypto/core@2.3.4:
-    resolution: {integrity: sha512-3CcxPB2nEVcNblCMd4xf7ZzX9UL0T0UMYmDY5cmFGnKNQcnQcaSUOn3Ke5IVB9GSvsublKTRN7EWPhIOuNw9mA==}
+  /@axiom-crypto/core@2.3.5:
+    resolution: {integrity: sha512-1O/oM4gvZWf0VtVtypHAKmJQFluMj0k976OuM6HOGnOgNu+TqWt/9jUZeZ9HEUWGXEoFCNI5l9dA5pgdnJN1/g==}
     dependencies:
-      '@axiom-crypto/tools': 2.0.0
+      '@axiom-crypto/tools': 2.0.1
       axios: 1.6.5
       bs58: 5.0.0
       ethers: 6.10.0
@@ -91,8 +91,8 @@ packages:
     resolution: {integrity: sha512-SUHXnydtx5rY0gQ2zWy0Br6L3iaAFo5RH/AMnOCSM4Nb3inqinBEnXQgEPZ45+EFmeOfRi1xOVUBdo6keZlacQ==}
     dev: false
 
-  /@axiom-crypto/tools@2.0.0:
-    resolution: {integrity: sha512-zoNlRRTyS98xysKrui2g+/f+A6+LiSi7wNw1m+xbCcDkY5/yz52VkbpGt+DTfo5FboiqTaXAq5f5CidNg4Z0mQ==}
+  /@axiom-crypto/tools@2.0.1:
+    resolution: {integrity: sha512-rMJFvxhryU2o4GSKibGLygJfY7+yP8N5PddeuD2XiRo/BD2F4OY7MrdmsxQLoCjvNxECqVa/gcLTCratjSTMdw==}
     dependencies:
       ethers: 6.10.0
     transitivePeerDependencies:
@@ -352,7 +352,7 @@ packages:
     resolution: {integrity: sha512-osvveYtyzdEVbt3OfwwXFr4P2iVBL5u1Q3q4ONBfDY/UpOuXmOlbgwc1xECEboY8wIays8Yt6onaWMUdUbfl0A==}
     dependencies:
       '@noble/curves': 1.1.0
-      '@noble/hashes': 1.3.1
+      '@noble/hashes': 1.3.2
       '@scure/base': 1.1.5
     dev: false
 

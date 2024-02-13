@@ -16,6 +16,13 @@ export interface CircuitInputs {
   logIdx: CircuitValue;
 }
 
+/// Inputs used for compiling the circuit
+export const defaultInputs = {
+  "blockNumber": 5130226,
+  "txIdx": 40,
+  "logIdx": 2
+};
+
 // The function name `circuit` is searched for by default by our Axiom CLI; if you decide to 
 // change the function name, you'll also need to ensure that you also pass the Axiom CLI flag 
 // `-f <circuitFunctionName>` for it to work

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.19;
+pragma solidity ^0.8.19;
 
 import { IERC20 } from "@openzeppelin-contracts/token/ERC20/IERC20.sol";
 import { Ownable } from "@openzeppelin-contracts/access/Ownable.sol";
@@ -26,6 +26,7 @@ contract AutonomousAirdrop is AxiomV2Client, Ownable {
 
     constructor(address _axiomV2QueryAddress, uint64 _callbackSourceChainId, bytes32 _axiomCallbackQuerySchema)
         AxiomV2Client(_axiomV2QueryAddress)
+        Ownable(msg.sender)
     {
         callbackSourceChainId = _callbackSourceChainId;
         axiomCallbackQuerySchema = _axiomCallbackQuerySchema;

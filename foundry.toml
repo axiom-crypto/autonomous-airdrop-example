@@ -1,7 +1,7 @@
 [profile.default]
 src = "src"
 out = "out"
-solc = "0.8.20"
+solc = "0.8.19"
 libs = ["node_modules", "lib"]
 remappings = [
   "@axiom-crypto/axiom-std/=lib/axiom-std/src/",

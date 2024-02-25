@@ -23,12 +23,8 @@ contract AutonomousAirdropTest is AxiomTest {
     function setUp() public {
         _createSelectForkAndSetupAxiom("sepolia", 5_103_100);
 
-        input = AxiomInput({
-            blockNumber: 5_130_226,
-            txIdx: 40,
-            logIdx: 2
-        });
-        
+        input = AxiomInput({ blockNumber: 5_130_226, txIdx: 40, logIdx: 2 });
+
         querySchema = axiomVm.readCircuit("app/axiom/swapEvent.circuit.ts");
 
         autonomousAirdrop = new AutonomousAirdrop(axiomV2QueryAddress, uint64(block.chainid), querySchema);
@@ -36,10 +32,17 @@ contract AutonomousAirdropTest is AxiomTest {
         autonomousAirdrop.updateAirdropToken(address(uselessToken));
     }
 
-        /// @dev Simple demonstration of testing an Axiom client contract using Axiom cheatcodes
+    /// @dev Simple demonstration of testing an Axiom client contract using Axiom cheatcodes
     function test_simple_example() public {
         // create a query into Axiom with default parameters
-        Query memory q = query(querySchema, abi.encode(input), address(autonomousAirdrop));
+        Query memory q = query(
+            querySchema,
+            abi.encode(input),
+            address(autonomousAirdrop),
+            bytes(""),
+            IAxiomV2Query.AxiomV2FeeData({ maxFeePerGas: 25 gwei, callbackGasLimit: 1_000_000, overrideAxiomQueryFee: 0 }),
+            SWAP_SENDER_ADDR
+        );
 
         // send the query to Axiom
         q.send();
@@ -47,8 +50,8 @@ contract AutonomousAirdropTest is AxiomTest {
         require(autonomousAirdrop.hasClaimed(SWAP_SENDER_ADDR) == false, "User has already claimed this airdrop");
         uint256 prevBalance = uselessToken.balanceOf(SWAP_SENDER_ADDR);
 
-        // prank fulfillment of the query, returning the Axiom results 
-        bytes32[] memory results = q.prankFulfill(SWAP_SENDER_ADDR);
+        // prank fulfillment of the query, returning the Axiom results
+        bytes32[] memory results = q.prankFulfill();
 
         // parse Axiom results and verify length is as expected
         assertEq(results.length, 3);
@@ -57,7 +60,8 @@ contract AutonomousAirdropTest is AxiomTest {
         // verify the user claims the airdrop
         require(SWAP_SENDER_ADDR == userEventAddress, "Invalid user address for event");
         require(autonomousAirdrop.hasClaimed(userEventAddress), "User did not claim this airdrop");
-        require(uselessToken.balanceOf(SWAP_SENDER_ADDR)  == prevBalance + 100 * 10 ** 18, "User did not receive 100 tokens");
+        require(
+            uselessToken.balanceOf(SWAP_SENDER_ADDR) == prevBalance + 100 * 10 ** 18, "User did not receive 100 tokens"
+        );
     }
-
 }

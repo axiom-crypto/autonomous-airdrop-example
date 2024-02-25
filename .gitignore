@@ -45,3 +45,4 @@ docs/
 # Misc
 .DS_Store
 .axiom
+.vscode

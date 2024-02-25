@@ -15,7 +15,7 @@ contract AutonomousAirdrop is AxiomV2Client, Ownable {
     bytes32 public constant SWAP_EVENT_SCHEMA = 0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67;
     address public constant UNIV3_POOL_UNI_WETH0 = 0x224Cc4e5b50036108C1d862442365054600c260C;
     address public constant UNIV3_POOL_UNI_WETH1 = 0x287B0e934ed0439E2a7b1d5F0FC25eA2c24b64f7;
-    uint32 public constant MIN_BLOCK_NUMBER = 4000000;
+    uint32 public constant MIN_BLOCK_NUMBER = 4_000_000;
 
     uint64 public callbackSourceChainId;
     bytes32 public axiomCallbackQuerySchema;
@@ -26,7 +26,7 @@ contract AutonomousAirdrop is AxiomV2Client, Ownable {
 
     constructor(address _axiomV2QueryAddress, uint64 _callbackSourceChainId, bytes32 _axiomCallbackQuerySchema)
         AxiomV2Client(_axiomV2QueryAddress)
-        Ownable(msg.sender)
+        Ownable()
     {
         callbackSourceChainId = _callbackSourceChainId;
         axiomCallbackQuerySchema = _axiomCallbackQuerySchema;
@@ -64,8 +64,7 @@ contract AutonomousAirdrop is AxiomV2Client, Ownable {
             "Autonomous Airdrop: Block number for transaction receipt must be 4000000 or greater"
         );
         require(
-            uniV3PoolUniWethAddr == UNIV3_POOL_UNI_WETH0 || 
-            uniV3PoolUniWethAddr == UNIV3_POOL_UNI_WETH1,
+            uniV3PoolUniWethAddr == UNIV3_POOL_UNI_WETH0 || uniV3PoolUniWethAddr == UNIV3_POOL_UNI_WETH1,
             "Autonomous Airdrop: Address that emitted `Swap` event is not the UniV3 UNI-WETH pool address"
         );
 

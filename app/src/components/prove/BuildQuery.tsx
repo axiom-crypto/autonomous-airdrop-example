@@ -11,12 +11,12 @@ import ClaimAirdropClient from "./ClaimAirdropClient";
 
 export default function BuildQuery({
   inputs,
-  callbackAddress,
+  callbackTarget,
   callbackExtraData,
   callbackAbi
 }: {
   inputs: UserInput<typeof jsonInputs>;
-  callbackAddress: string;
+  callbackTarget: string;
   callbackExtraData?: string;
   callbackAbi: any[];
 }) {
@@ -36,8 +36,8 @@ export default function BuildQuery({
     if (callbackExtraData === undefined) {
       callbackExtraData = bytes32("0");
     }
-    setParams(inputs, callbackAddress, callbackExtraData, refundee);
-  }, [setParams, inputs, callbackAddress, callbackExtraData, refundee]);
+    setParams(inputs, callbackTarget, callbackExtraData, refundee);
+  }, [setParams, inputs, callbackTarget, callbackExtraData, refundee]);
 
   useEffect(() => {
     const buildQuery = async () => {

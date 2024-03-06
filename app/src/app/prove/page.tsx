@@ -36,7 +36,7 @@ export default async function Prove({ searchParams }: PageProps) {
       <div className="flex flex-col gap-2 items-center">
         <BuildQuery
           inputs={inputs}
-          callbackAddress={Constants.AUTO_AIRDROP_ADDR}
+          callbackTarget={Constants.AUTO_AIRDROP_ADDR}
           callbackAbi={AutonomousAirdrop.abi}
         />
       </div>

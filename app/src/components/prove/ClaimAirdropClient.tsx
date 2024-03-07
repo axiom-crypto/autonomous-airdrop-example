@@ -27,7 +27,13 @@ export default function ClaimAirdropClient({
   const [showExplorerLink, setShowExplorerLink] = useState(false);
 
   // Prepare hook for the sendQuery transaction
-  const { data } = useSimulateContract(builtQuery!);
+  const { data } = useSimulateContract({
+    address: builtQuery!.address as `0x${string}`,
+    abi: builtQuery!.abi,
+    functionName: builtQuery!.functionName,
+    value: builtQuery!.value,
+    args: builtQuery!.args,
+  });
   const { writeContract, isPending, isSuccess, isError } = useWriteContract();
 
   // Check that the user has not claimed the airdrop yet

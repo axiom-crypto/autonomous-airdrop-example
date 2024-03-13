@@ -10,6 +10,7 @@ remappings = [
   "forge-std/=lib/forge-std/src/"
 ]
 ffi = true
+ast = true
 fs_permissions = [
   { access = "read-write", path = ".axiom" },
   { access = "read", path = "app/axiom/data" }

@@ -1,6 +1,6 @@
 {
   "name": "autonomous-airdrop-example",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "An autonomous airdrop example dApp built with Axiom.",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "author": "Intrinsic Technologies",
   "license": "MIT",
   "dependencies": {
-    "@axiom-crypto/client": "2.0.6",
+    "@axiom-crypto/client": "2.0.7",
     "dotenv": "^16.3.2"
   },
   "devDependencies": {

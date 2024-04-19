@@ -2,25 +2,22 @@
 
 import {
   useAccount,
-  useConnect,
-  useDisconnect,
   useEnsName,
 } from 'wagmi'
-import { injected } from 'wagmi/connectors'
 import Button from './Button';
 import { shortenAddress } from '@/lib/utils';
+import { useWeb3Modal } from '@web3modal/wagmi/react';
 
 export default function ConnectWallet() {
   const { address, isConnected } = useAccount()
   const { data: ensName } = useEnsName({ address })
-  const { connect } = useConnect();
-  const { disconnect } = useDisconnect()
+  const signInModal = useWeb3Modal();
 
   if (isConnected) {
     return (
       <Button
         onClick={() => {
-          disconnect();
+          signInModal.open({ view: "Account" })
         }}
       >
         {ensName ? ensName : shortenAddress(address as string)}
@@ -32,7 +29,7 @@ export default function ConnectWallet() {
     <div>
       <Button
         onClick={() => {
-          connect({ connector: injected() })
+          signInModal.open()
         }}
       >
         {"Connect Wallet"}

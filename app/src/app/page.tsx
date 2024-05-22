@@ -17,7 +17,7 @@ export default async function Home() {
           Compile circuit first by running in the root directory of this project:
         </div>
         <CodeBox>
-          {"npx axiom compile circuit app/axiom/swapEvent.circuit.ts"}
+          {"npx axiom circuit compile app/axiom/swapEvent.circuit.ts"}
         </CodeBox>
       </>
     )
